@@ -111,6 +111,11 @@ public class EV3Control extends Thread implements ShootingListener, SoccerEventL
 	}
 	
 	public void EV3_forward(float speed){
+		if (!this.enabled){
+			this.EV3_forward_mode0(0);
+			return;
+		}
+		
 		speed = this.speedFilter(speed); // color sensor の値からスピードを変更する
 		
 		if (this.controllerMode == 0)
@@ -195,6 +200,7 @@ public class EV3Control extends Thread implements ShootingListener, SoccerEventL
 	}
 	
 	public float speedFilter(float speed){
+		if ( !this.enabled) return 0;
 		if (speed == 0)	return 0;
 		if (speed < 0) this.forwardSpeed_prev = -Math.abs(forwardSpeed_prev);
 		
